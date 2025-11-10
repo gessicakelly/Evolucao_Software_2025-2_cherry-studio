@@ -39,6 +39,17 @@ print("Usando GPU para aceleração" if device == 0 else "Usando CPU (pode ser m
 # Carregar modelo
 print(f"\nCarregando modelo: {modelo} ...")
 analisador = pipeline("sentiment-analysis", model=modelo, device=device)
+# Para realizar o truncamento automático dos dados, substitua a linha acima por esta abaixo:
+'''
+analisador = pipeline(
+    "sentiment-analysis",
+    model=modelo,
+    device=device,
+    truncation=True,
+    max_length=512,
+    padding=True
+)
+'''
 print("Modelo carregado com sucesso!\n")
 
 # Ler arquivo JSON
