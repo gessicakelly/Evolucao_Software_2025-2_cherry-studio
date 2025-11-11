@@ -61,7 +61,7 @@ c. Rodar o script comparativo:
 python comparacao.py
 ```
 
-### Conclusão
+## Conclusão
 
 O projeto permitiu:
 
