@@ -48,4 +48,54 @@ Cada modelo possui um script individual que realiza as seguintes etapas:
 
 - JSON PRs → limpeza de comentários → seleção de comentários válidos → análise de sentimentos com modelo específico → exportação para CSV
 
+<<<<<<< HEAD
 * Cada script é adaptado para o modelo correspondente, mas o fluxo geral permanece o mesmo.
+=======
+b. Modelos Utilizados
+ - [ClapAI](https://huggingface.co/clapAI/modernBERT-large-multilingual-sentiment) 
+ - [TabularisAI](https://huggingface.co/tabularisai/multilingual-sentiment-analysis)
+ - [TerrenceWee12](https://huggingface.co/terrencewee12/xlm-roberta-base-sentiment-multilingual-finetuned-v2)
+ 
+   Cada modelo foi executado separadamente, gerando um arquivo CSV com: 
+   ```
+   PR_Number | Author | Comment | Sentiment | Confidence
+   ```
+c. Tratamento dos Dados
+- Implementado truncamento automático de textos longos (máx. 512 tokens) para evitar erros de execução.
+- Padronização dos sentimentos em três classes principais:
+   -  Positive
+   - Neutral
+   - Negative
+
+d. Comparação Entre Modelos
+- Os resultados foram mesclados em uma única [tabela comparativa](https://github.com/gessicakelly/Evolucao_Software_2025-2_cherry-studio/blob/main/Saidas/comparacao_modelos.csv).
+- Calculado o percentual de cada sentimento por modelo.
+- Avaliada a concordância entre os modelos (quantos PRs tiveram o mesmo sentimento nos três).
+- Geração automática de gráficos e tabelas para visualização.
+
+## Execução
+
+a. Pré-requisitos:
+```
+pip install transformers pandas tqdm torch
+```
+
+b. Rodar o script do modelo escolhido:
+```
+python tabularisai.py
+```
+c. Rodar o script comparativo:
+```
+python comparacao.py
+```
+
+## Conclusão
+
+O projeto permitiu:
+
+- Comparar o comportamento de diferentes modelos de análise de sentimentos.
+
+- Identificar momentos de maior positividade ou negatividade nas interações do repositório.
+
+- Observar o impacto emocional na evolução do projeto de software.
+>>>>>>> adb034844487b4e671e47d7b1ae54743fdd2fc37
