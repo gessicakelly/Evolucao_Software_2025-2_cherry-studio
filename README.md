@@ -1,61 +1,52 @@
 # Evolucao_Software_2025-2_cherry-studio
+Repositório da primeira atividade da disciplina de Evolução de Software, desenvolvido pela Equipe 02.
 
-### 1. Coleta de Pull Requests
-* Foram capturadas 300 Pull Requests.
-* O script responsável pelo dump foi [`script_dump.py`]([link_para_o_arquivo_no_GitHub](https://github.com/gessicakelly/Evolucao_Software_2025-2_cherry-studio/blob/main/script_dump.py)) que gerou os arquivos em CSV e JSON presentes na pasta Entradas.
+Integrantes:
+- Géssica Kelly De Souza Santos
+- Iago Humberto Da Rosa Normandia 
+- Leticia Da Mata Cavalcanti 
+- Maria Fernanda Da Mota Diniz 
+- Pedro Henrique Gomes Dos Santos 
+- Sammya Emanuelle Guimaraes De Oliveira 
+- Wenderson Luiz Portela Da Silva
+- Bruno Amancio Ferreira 
 
-### 2. Modelos Utilizados
+## 1. Estrutura do Projeto
 
-Cada modelo possui um script individual que realiza as seguintes etapas:
+- Entradas/ – Contém o CSV e JSON gerados pela coleta dos Pull Requests.
 
-1. Recebe o modelo escolhido.
-2. Carrega o modelo do Hugging Face.
-3. Lê o arquivo JSON com os dados das PRs.
-4. Faz a limpeza dos dados, descartando comentários vazios.
-5. Executa a análise de sentimentos nos comentários válidos.
-6. Salva os resultados em CSV para posterior análise.
+- Modelo X/ – Pasta do respectivo modelo.
 
-| Modelo                                                               | URL                                                                                               | Observações                                                                            |
-| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `clapAI/modernBERT-large-multilingual-sentiment`                     | [link](https://huggingface.co/clapAI/modernBERT-large-multilingual-sentiment)                     | Multilingual; não houve erros na leitura dos comentários; análise completa.            |
-| `tabularisai/multilingual-sentiment-analysis`                        | [link](https://huggingface.co/tabularisai/multilingual-sentiment-analysis)                        | Multilingual; houve alguns erros em textos muito grandes devido a limitação do modelo. |
-| `terrencewee12/xlm-roberta-base-sentiment-multilingual-finetuned-v2` | [link](https://huggingface.co/terrencewee12/xlm-roberta-base-sentiment-multilingual-finetuned-v2) | Multilingual; erros ocasionais em textos muito grandes        |
+   - nome_modelo.py – Script que executa o modelo.
+   - gera_grafico.py – Gera gráficos dos resultados.
+   - resultados/ – Guarda o CSV gerado e o gráfico do modelo.
 
----
+- Saidas/ – Armazena o CSV de comparação entre os modelos e os gráficos finais.
+- comparacao.py – Compara os resultados dos três modelos.
+- script_dump.py – Coleta os Pull Requests e gera os arquivos de entrada.
+- requirements.txt – Dependências do projeto.
 
-### 3. Considerações Iniciais
+## 2. Objetivo
 
-1. **Primeiro modelo (`clapAI/modernBERT`)**
-
-   * Mais completo.
-   * Nenhum problema na leitura de comentários.
-   * Capaz de identificar todo o texto, mesmo quando contém múltiplos idiomas.
-
-2. **Segundo modelo (`tabularisai/multilingual-sentiment-analysis`)**
-
-   * Também multitilingual.
-   * Limitações apenas em textos muito longos, ocasionando erros.
-   * Necessário ajuste para ignorar ou truncar textos grandes.
-
-3. **Terceiro modelo (`terrencewee12/xlm-roberta-base`)**
-
-   * Multilingual.
-   * Mesma limitação de textos grandes, ajustada nos scripts.
-   * Permitiu análise correta dos comentários válidos restantes.
+Este projeto realiza uma análise de sentimentos sobre os comentários dos pull requests (PRs) do repositório cherry-studio, utilizando diferentes modelos de linguagem disponibilizados na plataforma Hugging Face.
+O objetivo principal é compreender a percepção e o tom emocional dos desenvolvedores ao longo da evolução do projeto, identificando possíveis padrões de positividade, neutralidade e negatividade nas interações registradas nos PRs.
 
 
-### 4. Fluxo de Processamento dos Scripts
+## 3. Etapas Realizadas
 
-- JSON PRs → limpeza de comentários → seleção de comentários válidos → análise de sentimentos com modelo específico → exportação para CSV
+ a.  Coleta de Dados
+   - Foram extraídos os 300 últimos pull requests fechados do projeto [`script_dump.py`]([link_para_o_arquivo_no_GitHub](https://github.com/gessicakelly/Evolucao_Software_2025-2_cherry-studio/blob/main/script_dump.py)) 
+   - Cada PR teve seus comentários coletados (autor, número e comentario).
+   - Os dados foram salvos em um arquivo JSON para posterior análise.
 
-<<<<<<< HEAD
-* Cada script é adaptado para o modelo correspondente, mas o fluxo geral permanece o mesmo.
-=======
 b. Modelos Utilizados
  - [ClapAI](https://huggingface.co/clapAI/modernBERT-large-multilingual-sentiment) 
  - [TabularisAI](https://huggingface.co/tabularisai/multilingual-sentiment-analysis)
  - [TerrenceWee12](https://huggingface.co/terrencewee12/xlm-roberta-base-sentiment-multilingual-finetuned-v2)
  
+Os modelos foram escolhidos por usarem categorias compatíveis com a atividade (positivo/negativo/ neutro) e por serem multilinguais, o que é essencial porque os comentários das PRs contêm mistura de idiomas.
+
+
    Cada modelo foi executado separadamente, gerando um arquivo CSV com: 
    ```
    PR_Number | Author | Comment | Sentiment | Confidence
@@ -73,23 +64,37 @@ d. Comparação Entre Modelos
 - Avaliada a concordância entre os modelos (quantos PRs tiveram o mesmo sentimento nos três).
 - Geração automática de gráficos e tabelas para visualização.
 
-## Execução
+## 4. Como executar 
 
 a. Pré-requisitos:
+
+Instale todas as dependências utilizando o arquivo `requirements.txt`:
+
 ```
-pip install transformers pandas tqdm torch
+pip install -r requirements.txt
 ```
 
 b. Rodar o script do modelo escolhido:
+
 ```
 python tabularisai.py
+python clapAI.py
+python terencee.py
 ```
+
+Ao final da execução, cada modelo gera um arquivo CSV com os resultados na sua respectiva pasta `resultados/`.
+
 c. Rodar o script comparativo:
+
 ```
 python comparacao.py
 ```
+Esse script é responsável por analisar a correspondência entre os resultados e comparar o desempenho dos três modelos.
 
-## Conclusão
+
+
+
+## 5. Conclusão
 
 O projeto permitiu:
 
@@ -98,4 +103,9 @@ O projeto permitiu:
 - Identificar momentos de maior positividade ou negatividade nas interações do repositório.
 
 - Observar o impacto emocional na evolução do projeto de software.
->>>>>>> adb034844487b4e671e47d7b1ae54743fdd2fc37
+
+## 6. Infraestrutura utilizada
+- Processador 11th Gen Intel(R) Core(TM) i5-11400F @ 2.60GHz (2.59 GHz)
+- Memória RAM Kingston 16,0 GB DDR4 3200mHz
+- Placa de vídeo: NVIDIA RTX 4060 T.I
+- Sistema Operacional: Windows 11
